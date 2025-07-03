@@ -69,7 +69,20 @@ class Program
 
             var allResults = new List<OneMapSearchItem>();
 
-            for (int i = 18900; i <= 999999; i++)
+            int startPostalCode = 0;
+            if (!int.TryParse(config["OneMap:StartPostalCode"], out startPostalCode))
+            {
+                Console.WriteLine("Invalid or missing StartPostalCode in configuration. Defaulting to 0.");
+                startPostalCode = 0;
+            }
+            int endPostalCode = 999999;
+            if (!int.TryParse(config["OneMap:EndPostalCode"], out startPostalCode))
+            {
+                Console.WriteLine("Invalid or missing EndPostalCode in configuration. Defaulting to 999999.");
+                endPostalCode = 999999;
+            }
+
+            for (int i = startPostalCode; i <= endPostalCode; i++)
             {
                 string searchVal = i.ToString("D6");
                 //Console.WriteLine($"Searching: {searchVal}");
