@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveOneMap", "RetrieveOneMap\RetrieveOneMap.csproj", "{99E2689B-E0A3-402D-86A5-4B0D02A46355}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetrieveOneMap", "RetrieveOneMap\RetrieveOneMap.csproj", "{99E2689B-E0A3-402D-86A5-4B0D02A46355}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveOneMapForm", "RetrieveOneMapForm\RetrieveOneMapForm.csproj", "{1AD9B93A-AED6-4DB2-B6C8-55E59A67CE83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{99E2689B-E0A3-402D-86A5-4B0D02A46355}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99E2689B-E0A3-402D-86A5-4B0D02A46355}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99E2689B-E0A3-402D-86A5-4B0D02A46355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AD9B93A-AED6-4DB2-B6C8-55E59A67CE83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD9B93A-AED6-4DB2-B6C8-55E59A67CE83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD9B93A-AED6-4DB2-B6C8-55E59A67CE83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD9B93A-AED6-4DB2-B6C8-55E59A67CE83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

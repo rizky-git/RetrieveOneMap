@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageIcon>Wilnichols-Alumin-Folders-IOS-Icons-Black-Folder.128.png</PackageIcon>
-    <ApplicationIcon>if-advantage-nearby-1034361_88844.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\if-advantage-nearby-1034361_88844.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,17 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="if-advantage-nearby-1034361_88844.ico" />
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\..\Downloads\Wilnichols-Alumin-Folders-IOS-Icons-Black-Folder.128.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Content Include="Resources\if-advantage-nearby-1034361_88844.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +27,17 @@
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\if-advantage-nearby-1034361_88844.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Resources\Wilnichols-Alumin-Folders-IOS-Icons-Black-Folder.128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
