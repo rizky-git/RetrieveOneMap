@@ -72,12 +72,17 @@ class Program
             for (int i = 18900; i <= 999999; i++)
             {
                 string searchVal = i.ToString("D6");
-                Console.WriteLine($"Searching: {searchVal}");
+                //Console.WriteLine($"Searching: {searchVal}");
 
                 try
                 {
                     var results = await GetAllResults(searchVal, token);
-                    allResults.AddRange(results);
+
+                    if (results.Count > 0)
+                    {
+                        Console.WriteLine($"Found: {allResults.Count} for {searchVal}");
+                        allResults.AddRange(results);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -93,7 +98,7 @@ class Program
             //}, new JsonSerializerOptions { WriteIndented = true }));
 
             //SaveToCsv(allResults, $"postal_data_{searchInput}.csv");
-            SaveToCsv(allResults, $"postal_data_all.csv");
+            SaveToCsv(allResults, $"postal_data_all_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv");
             Console.WriteLine($"END : {DateTime.Now}");
         }
         catch (Exception ex)
