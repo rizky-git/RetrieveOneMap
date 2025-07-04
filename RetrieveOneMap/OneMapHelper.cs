@@ -79,8 +79,8 @@ namespace RetrieveOneMap
                 });
 
                 string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-                SaveToCsv(allResults, Path.Combine(exportFolder, $"postal_data_{timestamp}.csv"));
-                SaveToExcel(allResults, Path.Combine(exportFolder, $"postal_data_{timestamp}.xlsx"));
+                SaveToCsv(allResults, Path.Combine(exportFolder, $"postal_data_{startPostalCode}-{endPostalCode}_{timestamp}.csv"));
+                SaveToExcel(allResults, Path.Combine(exportFolder, $"postal_data_{startPostalCode}-{endPostalCode}_{timestamp}.xlsx"));
 
                 reportStatus?.Invoke("✅ Extraction complete.");
                 Log.Information("Extraction finished at {Time}", DateTime.Now);
