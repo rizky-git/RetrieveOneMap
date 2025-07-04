@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Serilog;
+using System.Collections.Concurrent;
 using System.Text;
 using System.Text.Json;
 
@@ -45,40 +46,50 @@ namespace RetrieveOneMap
                 }
 
                 var allResults = new List<OneMapSearchItem>();
-                var locker = new object();
+                var failedPostals = new ConcurrentBag<string>();
+                object locker = new object();
 
-                await Parallel.ForEachAsync(GeneratePostalCodes(startPostalCode, endPostalCode), new ParallelOptions { MaxDegreeOfParallelism = 10 }, async (postal, ct) =>
-                {
-                    try
+                await Parallel.ForEachAsync(GeneratePostalCodes(startPostalCode, endPostalCode),
+                    new ParallelOptions { MaxDegreeOfParallelism = 10 },
+                    async (postal, ct) =>
                     {
-                        var res = await GetAllResults(postal, token);
-                        if (res.Count > 0)
+                        try
                         {
-                            lock (locker)
+                            var res = await GetAllResults(postal, token);
+                            if (res.Count > 0)
                             {
-                                allResults.AddRange(res);
-                                //reportStatus?.Invoke($"✅ {postal}: {res.Count} record(s)");
-                                //Console.WriteLine($"✅ {postal}: {res.Count} record(s)");
-                                //Log.Information($"✅ {postal}: {res.Count} record(s)");
+                                lock (locker)
+                                {
+                                    allResults.AddRange(res);
+                                }
                             }
+                            reportStatus?.Invoke($"✅ {postal}: {res.Count} record(s)");
                         }
-                        reportStatus?.Invoke($"✅ {postal}: {res.Count} record(s)");
-                    }
-                    catch (Exception ex)
-                    {
-                        //Console.WriteLine($"❌ {postal}: {ex.Message}");
-                        reportError?.Invoke(ex.Message);
-                        reportStatus?.Invoke($"❌ {postal}: {ex.Message}");
-                        Log.Error(ex, "An error occurred");
-                        throw;
-                    }
-                });
+                        catch (Exception ex)
+                        {
+                            failedPostals.Add(postal); // Add to failed list
+                            reportError?.Invoke($"❌ {postal}: {ex.Message}");
+                            reportStatus?.Invoke($"❌ {postal}: {ex.Message}");
+                            Log.Error(ex, "An error occurred for postal code {Postal}", postal);
+                            // throw //Don't throw to continue with other postal codes
+                        }
+                    });
 
                 string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+
                 SaveToCsv(allResults, Path.Combine(exportFolder, $"postal_data_{startPostalCode}-{endPostalCode}_{timestamp}.csv"));
                 SaveToExcel(allResults, Path.Combine(exportFolder, $"postal_data_{startPostalCode}-{endPostalCode}_{timestamp}.xlsx"));
 
-                reportStatus?.Invoke("✅ Extraction complete.");
+                if (failedPostals.Count > 0)
+                {
+                    var failedList = string.Join(", ", failedPostals);
+                    File.WriteAllLines(Path.Combine(exportFolder, $"failed_postals_{timestamp}.txt"), failedPostals);
+                    reportStatus?.Invoke($"⚠️ Failed postal codes: {failedList}");
+                    Log.Warning("Some postal codes failed: {FailedList}", failedList);
+                }
+
+                reportStatus?.Invoke($"✅ Extraction complete. {allResults.Count} records downloaded.");
+
                 Log.Information("Extraction finished at {Time}", DateTime.Now);
             }
             catch (Exception ex)
