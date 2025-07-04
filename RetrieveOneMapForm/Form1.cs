@@ -7,6 +7,13 @@ namespace RetrieveOneMapForm
         public Form1()
         {
             InitializeComponent();
+
+            rbToken.Checked = true;
+            rbCredential.Checked = false;
+
+            rtbToken.Enabled = true;
+            tbEmail.Enabled = false;
+            tbPassword.Enabled = false;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -14,17 +21,31 @@ namespace RetrieveOneMapForm
             string accessToken = rtbToken.Text.Trim();
             string email = tbEmail.Text.Trim();
             string password = tbPassword.Text.Trim();
-            int startPostalCode = int.TryParse(tbStart.Text, out int start) ? start : 0;
-            int endPostalCode = int.TryParse(tbTo.Text, out int end) ? end : 999999;
 
             try
             {
-                if (email == "" && password == "" && accessToken == "")
+                if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(password) && string.IsNullOrWhiteSpace(accessToken))
                 {
                     throw new ArgumentException("Invalid login credentials");
                 }
 
-                btnRun.Enabled = false;
+                if ((!string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(password)) && string.IsNullOrWhiteSpace(accessToken))
+                {
+                    throw new ArgumentException("Invalid login credentials");
+                }
+
+                if (!int.TryParse(tbStart.Text.Trim(), out int startPostalCode))
+                {
+                    throw new ArgumentException("Start Postal Code must be a valid number");
+                }
+
+                if (!int.TryParse(tbTo.Text.Trim(), out int endPostalCode))
+                {
+                    throw new ArgumentException("End Postal Code must be a valid number");
+                }
+
+                // Disable controls
+                SetControlsEnabled(false);
                 lbStatus.Text = "Starting extraction...";
                 Cursor = Cursors.WaitCursor;
 
@@ -38,19 +59,28 @@ namespace RetrieveOneMapForm
                     reportError: err => ShowErrorOnForm(err)
                 );
 
-                //MessageBox.Show("Extraction completed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CenteredMessageBox.CenteredMessageBox.Show(this, "Extraction completed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"Failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 CenteredMessageBox.CenteredMessageBox.Show(this, $"Failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                btnRun.Enabled = true;
+                // Re-enable controls
+                SetControlsEnabled(true);
                 Cursor = Cursors.Default;
             }
+        }
+
+        private void SetControlsEnabled(bool enabled)
+        {
+            rtbToken.Enabled = enabled;
+            tbEmail.Enabled = enabled;
+            tbPassword.Enabled = enabled;
+            tbStart.Enabled = enabled;
+            tbTo.Enabled = enabled;
+            btnRun.Enabled = enabled;
         }
 
         private void UpdateStatus(string message)
@@ -74,6 +104,20 @@ namespace RetrieveOneMapForm
             {
                 lbStatus.Text = "❌ " + message;
             }
+        }
+
+        private void rbToken_CheckedChanged(object sender, EventArgs e)
+        {
+            rtbToken.Enabled = true;
+            tbEmail.Enabled = false;
+            tbPassword.Enabled = false;
+        }
+
+        private void rbCredential_CheckedChanged(object sender, EventArgs e)
+        {
+            rtbToken.Enabled = false;
+            tbEmail.Enabled = true;
+            tbPassword.Enabled = true;
         }
     }
 }

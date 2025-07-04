@@ -128,7 +128,7 @@ namespace RetrieveOneMap
 
             var url = $"https://www.onemap.gov.sg/api/common/elastic/search?searchVal={searchVal}&returnGeom=Y&getAddrDetails=Y&pageNum={pageNum}";
             httpClient.DefaultRequestHeaders.Clear();
-            //httpClient.DefaultRequestHeaders.Add("Authorization", token);     //this is for add token on header
+            httpClient.DefaultRequestHeaders.Add("Authorization", token);     //this is for add token on header
 
             var response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();

@@ -41,12 +41,15 @@
             label5 = new Label();
             btnRun = new Button();
             lbStatus = new Label();
+            rbToken = new RadioButton();
+            rbCredential = new RadioButton();
+            label6 = new Label();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(28, 31);
+            label1.Location = new Point(28, 51);
             label1.Name = "label1";
             label1.Size = new Size(48, 20);
             label1.TabIndex = 0;
@@ -55,7 +58,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(28, 174);
+            label2.Location = new Point(28, 194);
             label2.Name = "label2";
             label2.Size = new Size(46, 20);
             label2.TabIndex = 1;
@@ -64,7 +67,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(28, 219);
+            label3.Location = new Point(28, 239);
             label3.Name = "label3";
             label3.Size = new Size(70, 20);
             label3.TabIndex = 2;
@@ -73,7 +76,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(28, 265);
+            label4.Location = new Point(28, 285);
             label4.Name = "label4";
             label4.Size = new Size(125, 20);
             label4.TabIndex = 3;
@@ -81,7 +84,8 @@
             // 
             // rtbToken
             // 
-            rtbToken.Location = new Point(165, 31);
+            rtbToken.BorderStyle = BorderStyle.FixedSingle;
+            rtbToken.Location = new Point(165, 51);
             rtbToken.Name = "rtbToken";
             rtbToken.Size = new Size(363, 120);
             rtbToken.TabIndex = 4;
@@ -89,14 +93,16 @@
             // 
             // tbEmail
             // 
-            tbEmail.Location = new Point(165, 167);
+            tbEmail.BorderStyle = BorderStyle.FixedSingle;
+            tbEmail.Location = new Point(165, 187);
             tbEmail.Name = "tbEmail";
             tbEmail.Size = new Size(363, 27);
             tbEmail.TabIndex = 5;
             // 
             // tbPassword
             // 
-            tbPassword.Location = new Point(165, 212);
+            tbPassword.BorderStyle = BorderStyle.FixedSingle;
+            tbPassword.Location = new Point(165, 232);
             tbPassword.Name = "tbPassword";
             tbPassword.Size = new Size(363, 27);
             tbPassword.TabIndex = 6;
@@ -104,24 +110,28 @@
             // 
             // tbStart
             // 
-            tbStart.Location = new Point(165, 258);
+            tbStart.BorderStyle = BorderStyle.FixedSingle;
+            tbStart.Location = new Point(165, 278);
+            tbStart.MaxLength = 6;
             tbStart.Name = "tbStart";
             tbStart.Size = new Size(150, 27);
             tbStart.TabIndex = 7;
-            tbStart.Text = "0";
+            tbStart.Text = "018900";
             // 
             // tbTo
             // 
-            tbTo.Location = new Point(378, 258);
+            tbTo.BorderStyle = BorderStyle.FixedSingle;
+            tbTo.Location = new Point(378, 278);
+            tbTo.MaxLength = 6;
             tbTo.Name = "tbTo";
             tbTo.Size = new Size(150, 27);
             tbTo.TabIndex = 8;
-            tbTo.Text = "999999";
+            tbTo.Text = "920000";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(333, 261);
+            label5.Location = new Point(333, 281);
             label5.Name = "label5";
             label5.Size = new Size(25, 20);
             label5.TabIndex = 9;
@@ -129,7 +139,7 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(28, 309);
+            btnRun.Location = new Point(28, 329);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(500, 66);
             btnRun.TabIndex = 10;
@@ -139,18 +149,54 @@
             // 
             // lbStatus
             // 
-            lbStatus.Location = new Point(28, 392);
+            lbStatus.Location = new Point(28, 412);
             lbStatus.Name = "lbStatus";
             lbStatus.Size = new Size(500, 40);
             lbStatus.TabIndex = 11;
             lbStatus.Text = "Status";
             lbStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // rbToken
+            // 
+            rbToken.AutoSize = true;
+            rbToken.Location = new Point(165, 12);
+            rbToken.Name = "rbToken";
+            rbToken.Size = new Size(69, 24);
+            rbToken.TabIndex = 12;
+            rbToken.TabStop = true;
+            rbToken.Text = "Token";
+            rbToken.UseVisualStyleBackColor = true;
+            rbToken.CheckedChanged += rbToken_CheckedChanged;
+            // 
+            // rbCredential
+            // 
+            rbCredential.AutoSize = true;
+            rbCredential.Location = new Point(288, 12);
+            rbCredential.Name = "rbCredential";
+            rbCredential.Size = new Size(98, 24);
+            rbCredential.TabIndex = 13;
+            rbCredential.TabStop = true;
+            rbCredential.Text = "Credential";
+            rbCredential.UseVisualStyleBackColor = true;
+            rbCredential.CheckedChanged += rbCredential_CheckedChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(28, 14);
+            label6.Name = "label6";
+            label6.Size = new Size(83, 20);
+            label6.TabIndex = 14;
+            label6.Text = "Auth Mode";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(559, 450);
+            ClientSize = new Size(559, 478);
+            Controls.Add(label6);
+            Controls.Add(rbCredential);
+            Controls.Add(rbToken);
             Controls.Add(lbStatus);
             Controls.Add(btnRun);
             Controls.Add(label5);
@@ -184,5 +230,8 @@
         private Label label5;
         private Button btnRun;
         private Label lbStatus;
+        private RadioButton rbToken;
+        private RadioButton rbCredential;
+        private Label label6;
     }
 }
