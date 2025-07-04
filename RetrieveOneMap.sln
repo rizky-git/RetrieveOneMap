@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetrieveOneMap", "RetrieveO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetrieveOneMapForm", "RetrieveOneMapForm\RetrieveOneMapForm.csproj", "{1AD9B93A-AED6-4DB2-B6C8-55E59A67CE83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveOneMapMauiApp", "RetrieveOneMapMauiApp\RetrieveOneMapMauiApp.csproj", "{37333936-EB56-4EB2-B2A3-A34C65073C56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetrieveOneMapMauiApp", "RetrieveOneMapMauiApp\RetrieveOneMapMauiApp.csproj", "{37333936-EB56-4EB2-B2A3-A34C65073C56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
