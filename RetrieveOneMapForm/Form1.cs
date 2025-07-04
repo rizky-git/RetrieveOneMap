@@ -24,14 +24,20 @@ namespace RetrieveOneMapForm
 
             try
             {
-                if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(password) && string.IsNullOrWhiteSpace(accessToken))
+                // Validate based on selected auth mode
+                if (rbToken.Checked)
                 {
-                    throw new ArgumentException("Invalid login credentials");
+                    if (string.IsNullOrWhiteSpace(accessToken))
+                        throw new ArgumentException("Token is required.");
                 }
-
-                if ((!string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(password)) && string.IsNullOrWhiteSpace(accessToken))
+                else if (rbCredential.Checked)
                 {
-                    throw new ArgumentException("Invalid login credentials");
+                    if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                        throw new ArgumentException("Email and password are required.");
+                }
+                else
+                {
+                    throw new ArgumentException("Please select an authentication mode.");
                 }
 
                 if (!int.TryParse(tbStart.Text.Trim(), out int startPostalCode))
@@ -111,6 +117,8 @@ namespace RetrieveOneMapForm
             rtbToken.Enabled = true;
             tbEmail.Enabled = false;
             tbPassword.Enabled = false;
+            tbEmail.Text = string.Empty;
+            tbPassword.Text = string.Empty;
         }
 
         private void rbCredential_CheckedChanged(object sender, EventArgs e)
@@ -118,6 +126,7 @@ namespace RetrieveOneMapForm
             rtbToken.Enabled = false;
             tbEmail.Enabled = true;
             tbPassword.Enabled = true;
+            rtbToken.Text = string.Empty;
         }
     }
 }
